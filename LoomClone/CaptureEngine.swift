@@ -1,9 +1,16 @@
 import AVFoundation
 import CoreGraphics
+import CoreVideo
 import Foundation
+import os
 import QuartzCore
 import ScreenCaptureKit
 import SwiftUI
+
+private let captureLogger = Logger(
+    subsystem: Bundle.main.bundleIdentifier ?? "LoomClone",
+    category: "Capture"
+)
 
 enum RecordingState: String {
     case idle
@@ -161,7 +168,7 @@ final class AppViewModel: ObservableObject {
     @Published var metadataOutputURL: URL?
     @Published var errorMessage: String?
     @Published var needsScreenRecordingPermission = false
-    @Published var bubblePosition = CGPoint(x: 0.8, y: 0.8)
+    @Published var bubblePosition = CGPoint(x: 0.5, y: 0.5)
     @Published var bubbleSize: CGFloat = 160
 
     let screenPreview = ScreenPreviewModel()
@@ -365,6 +372,74 @@ final class AppViewModel: ObservableObject {
         }
     }
 
+    func restartRecording() {
+        guard state == .recording || state == .paused else { return }
+        state = .stopping
+        errorMessage = nil
+
+        stopTimer()
+        micCapture.stop()
+
+        let screenURL = screenOutputURL
+        let cameraURL = cameraOutputURL
+        let metadataURL = metadataOutputURL
+
+        let group = DispatchGroup()
+        var screenResult: Result<URL, Error>?
+        var cameraResult: Result<URL, Error>?
+        var metadataResult: Result<URL, Error>?
+
+        group.enter()
+        screenRecorder.stopRecording { result in
+            DispatchQueue.main.async {
+                screenResult = result
+                group.leave()
+            }
+        }
+
+        group.enter()
+        cameraController.stopRecording { result in
+            DispatchQueue.main.async {
+                cameraResult = result
+                group.leave()
+            }
+        }
+
+        group.enter()
+        metadataLogger.stop { result in
+            DispatchQueue.main.async {
+                metadataResult = result
+                group.leave()
+            }
+        }
+
+        group.notify(queue: .main) {
+            self.pauseController.stop()
+            if case let .failure(error) = screenResult {
+                self.state = .error
+                self.errorMessage = self.formatError(error)
+                return
+            }
+            if case let .failure(error) = cameraResult {
+                self.state = .error
+                self.errorMessage = self.formatError(error)
+                return
+            }
+            if case let .failure(error) = metadataResult {
+                self.state = .error
+                self.errorMessage = self.formatError(error)
+                return
+            }
+
+            self.deleteRecordingFiles(screenURL: screenURL, cameraURL: cameraURL, metadataURL: metadataURL)
+            self.screenOutputURL = nil
+            self.cameraOutputURL = nil
+            self.metadataOutputURL = nil
+            self.elapsedTime = 0
+            self.state = .idle
+        }
+    }
+
     func pauseRecording() {
         guard state == .recording else { return }
         pauseController.pause()
@@ -392,6 +467,10 @@ final class AppViewModel: ObservableObject {
             return String(format: "%d:%02d:%02d", hours, minutes, seconds)
         }
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+
+    func currentTimelineSeconds() -> Double {
+        pauseController.currentTimelineSeconds()
     }
 
     private func startTimer() {
@@ -442,6 +521,7 @@ final class AppViewModel: ObservableObject {
 
     private func handleScreenCaptureError(_ error: Error) {
         let nsError = error as NSError
+        logCaptureError(error, context: "Screen capture error")
         if nsError.domain == SCStreamErrorDomain, nsError.code == -3801 {
             needsScreenRecordingPermission = true
             let bundlePath = Bundle.main.bundleURL.path
@@ -450,6 +530,16 @@ final class AppViewModel: ObservableObject {
         }
         needsScreenRecordingPermission = false
         errorMessage = formatError(error)
+    }
+
+    private func deleteRecordingFiles(screenURL: URL?, cameraURL: URL?, metadataURL: URL?) {
+        let fileManager = FileManager.default
+        for url in [screenURL, cameraURL, metadataURL] {
+            guard let url else { continue }
+            if fileManager.fileExists(atPath: url.path) {
+                try? fileManager.removeItem(at: url)
+            }
+        }
     }
 
     private func formatError(_ error: Error) -> String {
@@ -501,10 +591,15 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate {
     func startCapture(display: SCDisplay) async throws {
         let filter = SCContentFilter(display: display, excludingWindows: [])
         let config = SCStreamConfiguration()
-        config.width = CGDisplayPixelsWide(display.displayID)
-        config.height = CGDisplayPixelsHigh(display.displayID)
+        let width = CGDisplayPixelsWide(display.displayID)
+        let height = CGDisplayPixelsHigh(display.displayID)
+        let evenWidth = width - (width % 2)
+        let evenHeight = height - (height % 2)
+        config.width = max(2, evenWidth)
+        config.height = max(2, evenHeight)
         config.minimumFrameInterval = CMTime(value: 1, timescale: 30)
         config.queueDepth = 6
+        config.pixelFormat = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
         config.showsCursor = true
         config.capturesAudio = false
 
@@ -619,11 +714,14 @@ final class MicAudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDeleg
     private func configureSession() {
         session.beginConfiguration()
 
-        if let device = AVCaptureDevice.default(for: .audio) {
+        if let device = selectAudioDevice() {
             do {
                 let input = try AVCaptureDeviceInput(device: device)
                 if session.canAddInput(input) {
                     session.addInput(input)
+                    captureLogger.info(
+                        "Mic input selected: \(device.localizedName, privacy: .public) type=\(device.deviceType.rawValue, privacy: .public)"
+                    )
                 }
             } catch {
                 onError?(error)
@@ -638,6 +736,19 @@ final class MicAudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDeleg
 
         session.commitConfiguration()
         isConfigured = true
+    }
+
+    private func selectAudioDevice() -> AVCaptureDevice? {
+        if #available(macOS 14.0, *) {
+            if let builtIn = AVCaptureDevice.default(.microphone, for: .audio, position: .unspecified) {
+                return builtIn
+            }
+        } else {
+            if let builtIn = AVCaptureDevice.default(.builtInMicrophone, for: .audio, position: .unspecified) {
+                return builtIn
+            }
+        }
+        return AVCaptureDevice.default(for: .audio)
     }
 }
 
@@ -747,6 +858,8 @@ final class ScreenAssetWriter {
         let channels: Int
     }
 
+    private static let h264MaxDimension = 4096
+
     private let outputURL: URL
     private let includeAudio: Bool
     private let pauseController: PauseController
@@ -757,11 +870,17 @@ final class ScreenAssetWriter {
     private var videoInput: AVAssetWriterInput?
     private var audioInput: AVAssetWriterInput?
     private var didStartSession = false
+    private var sessionStartTime: CMTime?
     private var pendingVideoSample: CMSampleBuffer?
     private var audioFormat: AudioFormat?
+    private var lastVideoPTS: CMTime?
+    private var lastAudioPTS: CMTime?
+    private var isFinishing = false
     private var waitingForAudio = false
     private var audioWaitWorkItem: DispatchWorkItem?
     private let audioWaitDuration: TimeInterval = 0.4
+    private var didLogVideoAppendFailure = false
+    private var didLogAudioAppendFailure = false
 
     init(outputURL: URL, includeAudio: Bool, pauseController: PauseController, codec: AVVideoCodecType = .h264) {
         self.outputURL = outputURL
@@ -772,6 +891,7 @@ final class ScreenAssetWriter {
 
     func appendVideo(sampleBuffer: CMSampleBuffer) {
         queue.async {
+            guard !self.isFinishing else { return }
             guard CMSampleBufferDataIsReady(sampleBuffer) else { return }
             guard !self.pauseController.shouldDropSamples() else { return }
 
@@ -800,6 +920,7 @@ final class ScreenAssetWriter {
 
     func appendAudio(sampleBuffer: CMSampleBuffer) {
         queue.async {
+            guard !self.isFinishing else { return }
             guard CMSampleBufferDataIsReady(sampleBuffer) else { return }
             guard !self.pauseController.shouldDropSamples() else { return }
             guard self.includeAudio else { return }
@@ -838,6 +959,16 @@ final class ScreenAssetWriter {
                 completion(.success(self.outputURL))
                 return
             }
+            if self.isFinishing {
+                completion(.success(self.outputURL))
+                return
+            }
+            self.isFinishing = true
+            guard self.didStartSession else {
+                writer.cancelWriting()
+                completion(.success(self.outputURL))
+                return
+            }
             self.videoInput?.markAsFinished()
             self.audioInput?.markAsFinished()
             writer.finishWriting {
@@ -860,6 +991,7 @@ final class ScreenAssetWriter {
             let enableAudio = includeAudio && audioFormat != nil
             try configureWriter(videoSample: videoSample, enableAudio: enableAudio)
         } catch {
+            logCaptureError(error, context: "ScreenAssetWriter configure failed")
             return
         }
 
@@ -878,22 +1010,29 @@ final class ScreenAssetWriter {
             throw NSError(domain: "ScreenAssetWriter", code: -1)
         }
         let dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
+        let resolvedCodec = Self.resolvedCodec(preferred: codec, dimensions: dimensions)
 
-        let compression: [String: Any] = [
+        var compression: [String: Any] = [
             AVVideoAverageBitRateKey: 12_000_000,
-            AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel,
             AVVideoExpectedSourceFrameRateKey: 30,
             AVVideoMaxKeyFrameIntervalKey: 60
         ]
+        if resolvedCodec == .h264 {
+            compression[AVVideoProfileLevelKey] = AVVideoProfileLevelH264HighAutoLevel
+        }
 
         let videoSettings: [String: Any] = [
-            AVVideoCodecKey: codec,
+            AVVideoCodecKey: resolvedCodec,
             AVVideoWidthKey: Int(dimensions.width),
             AVVideoHeightKey: Int(dimensions.height),
             AVVideoCompressionPropertiesKey: compression
         ]
 
-        let videoInput = AVAssetWriterInput(mediaType: .video, outputSettings: videoSettings)
+        let videoInput = AVAssetWriterInput(
+            mediaType: .video,
+            outputSettings: videoSettings,
+            sourceFormatHint: formatDescription
+        )
         videoInput.expectsMediaDataInRealTime = true
         guard writer.canAdd(videoInput) else {
             throw NSError(domain: "ScreenAssetWriter", code: -2)
@@ -926,30 +1065,72 @@ final class ScreenAssetWriter {
 
         let offset = pauseController.currentOffset()
         if !didStartSession {
-            writer.startWriting()
+            if !writer.startWriting() {
+                logAssetWriterFailure(writer, context: "ScreenAssetWriter startWriting failed")
+                return
+            }
             let rawStart = CMTimeSubtract(CMSampleBufferGetPresentationTimeStamp(sampleBuffer), offset)
             let startTime = CMTimeCompare(rawStart, .zero) < 0 ? .zero : rawStart
             writer.startSession(atSourceTime: startTime)
             didStartSession = true
+            sessionStartTime = startTime
         }
 
         guard input.isReadyForMoreMediaData else { return }
         let adjusted = SampleBufferTiming.adjust(sampleBuffer, by: offset) ?? sampleBuffer
-        input.append(adjusted)
+        let pts = CMSampleBufferGetPresentationTimeStamp(adjusted)
+        if pts.isValid, CMTimeCompare(pts, .zero) < 0 {
+            return
+        }
+        if pts.isValid, let last = lastVideoPTS, CMTimeCompare(pts, last) <= 0 {
+            return
+        }
+        lastVideoPTS = pts.isValid ? pts : lastVideoPTS
+        if !input.append(adjusted) {
+            if !didLogVideoAppendFailure {
+                didLogVideoAppendFailure = true
+                logAssetWriterFailure(writer, context: "ScreenAssetWriter video append failed")
+            }
+        }
     }
 
     private func appendAudioInternal(_ sampleBuffer: CMSampleBuffer) {
-        guard didStartSession, let input = audioInput else { return }
+        guard didStartSession, let writer, let input = audioInput else { return }
         guard input.isReadyForMoreMediaData else { return }
         let offset = pauseController.currentOffset()
         let adjusted = SampleBufferTiming.adjust(sampleBuffer, by: offset) ?? sampleBuffer
-        input.append(adjusted)
+        let pts = CMSampleBufferGetPresentationTimeStamp(adjusted)
+        if let sessionStartTime, pts.isValid, CMTimeCompare(pts, sessionStartTime) < 0 {
+            return
+        }
+        if pts.isValid, CMTimeCompare(pts, .zero) < 0 {
+            return
+        }
+        if pts.isValid, let last = lastAudioPTS, CMTimeCompare(pts, last) <= 0 {
+            return
+        }
+        lastAudioPTS = pts.isValid ? pts : lastAudioPTS
+        if !input.append(adjusted) {
+            if !didLogAudioAppendFailure {
+                didLogAudioAppendFailure = true
+                logAssetWriterFailure(writer, context: "ScreenAssetWriter audio append failed")
+            }
+        }
     }
 
     private static func extractAudioFormat(sampleBuffer: CMSampleBuffer) -> AudioFormat? {
         guard let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else { return nil }
         guard let asbd = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription) else { return nil }
         return AudioFormat(sampleRate: asbd.pointee.mSampleRate, channels: Int(asbd.pointee.mChannelsPerFrame))
+    }
+
+    private static func resolvedCodec(preferred: AVVideoCodecType, dimensions: CMVideoDimensions) -> AVVideoCodecType {
+        guard preferred == .h264 else { return preferred }
+        let maxDimension = max(Int(dimensions.width), Int(dimensions.height))
+        if maxDimension > h264MaxDimension {
+            return .hevc
+        }
+        return preferred
     }
 }
 
@@ -962,6 +1143,8 @@ final class CameraAssetWriter {
     private var writer: AVAssetWriter?
     private var videoInput: AVAssetWriterInput?
     private var didStartSession = false
+    private var lastVideoPTS: CMTime?
+    private var isFinishing = false
 
     init(outputURL: URL, pauseController: PauseController, codec: AVVideoCodecType = .h264) {
         self.outputURL = outputURL
@@ -971,6 +1154,7 @@ final class CameraAssetWriter {
 
     func appendVideo(sampleBuffer: CMSampleBuffer) {
         queue.async {
+            guard !self.isFinishing else { return }
             guard CMSampleBufferDataIsReady(sampleBuffer) else { return }
             guard !self.pauseController.shouldDropSamples() else { return }
 
@@ -983,7 +1167,10 @@ final class CameraAssetWriter {
 
             let offset = self.pauseController.currentOffset()
             if !self.didStartSession {
-                writer.startWriting()
+                if !writer.startWriting() {
+                    logAssetWriterFailure(writer, context: "CameraAssetWriter startWriting failed")
+                    return
+                }
                 let rawStart = CMTimeSubtract(CMSampleBufferGetPresentationTimeStamp(sampleBuffer), offset)
                 let startTime = CMTimeCompare(rawStart, .zero) < 0 ? .zero : rawStart
                 writer.startSession(atSourceTime: startTime)
@@ -992,13 +1179,33 @@ final class CameraAssetWriter {
 
             guard input.isReadyForMoreMediaData else { return }
             let adjusted = SampleBufferTiming.adjust(sampleBuffer, by: offset) ?? sampleBuffer
-            input.append(adjusted)
+            let pts = CMSampleBufferGetPresentationTimeStamp(adjusted)
+            if pts.isValid, CMTimeCompare(pts, .zero) < 0 {
+                return
+            }
+            if pts.isValid, let last = self.lastVideoPTS, CMTimeCompare(pts, last) <= 0 {
+                return
+            }
+            self.lastVideoPTS = pts.isValid ? pts : self.lastVideoPTS
+            if !input.append(adjusted) {
+                logAssetWriterFailure(writer, context: "CameraAssetWriter video append failed")
+            }
         }
     }
 
     func finish(completion: @escaping (Result<URL, Error>) -> Void) {
         queue.async {
             guard let writer = self.writer, let input = self.videoInput else {
+                completion(.success(self.outputURL))
+                return
+            }
+            if self.isFinishing {
+                completion(.success(self.outputURL))
+                return
+            }
+            self.isFinishing = true
+            guard self.didStartSession else {
+                writer.cancelWriting()
                 completion(.success(self.outputURL))
                 return
             }
@@ -1104,4 +1311,20 @@ enum SampleBufferTiming {
         }
         return adjusted
     }
+}
+
+private func logCaptureError(_ error: Error, context: String) {
+    let nsError = error as NSError
+    let underlying = nsError.userInfo[NSUnderlyingErrorKey] as? NSError
+    let underlyingText = underlying.map { "\($0.localizedDescription) (\($0.domain) \($0.code))" } ?? "none"
+    captureLogger.error(
+        "\(context, privacy: .public): \(nsError.localizedDescription, privacy: .public) (\(nsError.domain, privacy: .public) \(nsError.code)) underlying=\(underlyingText, privacy: .public)"
+    )
+}
+
+private func logAssetWriterFailure(_ writer: AVAssetWriter, context: String) {
+    let errorText = writer.error.map { "\($0.localizedDescription) (\(($0 as NSError).domain) \(($0 as NSError).code))" } ?? "none"
+    captureLogger.error(
+        "\(context, privacy: .public): status=\(writer.status.rawValue) error=\(errorText, privacy: .public)"
+    )
 }
