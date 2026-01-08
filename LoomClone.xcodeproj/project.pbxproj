@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41E78636278CEC1300AB96D4 /* OrionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78635278CEC1300AB96D4 /* OrionApp.swift */; };
+		41E78636278CEC1300AB96D4 /* LoomCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78635278CEC1300AB96D4 /* LoomCloneApp.swift */; };
 		41E78638278CEC1300AB96D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78637278CEC1300AB96D4 /* ContentView.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* CaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* CaptureEngine.swift */; };
 		41E7863A278CEC1500AB96D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E78639278CEC1500AB96D4 /* Assets.xcassets */; };
 		41E7863D278CEC1500AB96D4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E7863C278CEC1500AB96D4 /* Preview Assets.xcassets */; };
-		41E78648278CEC1600AB96D4 /* OrionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78647278CEC1600AB96D4 /* OrionTests.swift */; };
-		41E78652278CEC1600AB96D4 /* OrionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78651278CEC1600AB96D4 /* OrionUITests.swift */; };
-		41E78654278CEC1600AB96D4 /* OrionUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78653278CEC1600AB96D4 /* OrionUITestsLaunchTests.swift */; };
+		41E78648278CEC1600AB96D4 /* LoomCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78647278CEC1600AB96D4 /* LoomCloneTests.swift */; };
+		41E78652278CEC1600AB96D4 /* LoomCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78651278CEC1600AB96D4 /* LoomCloneUITests.swift */; };
+		41E78654278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78653278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -22,29 +23,29 @@
 			containerPortal = 41E7862A278CEC1300AB96D4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 41E78631278CEC1300AB96D4;
-			remoteInfo = Orion;
+			remoteInfo = LoomClone;
 		};
 		41E7864E278CEC1600AB96D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 41E7862A278CEC1300AB96D4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 41E78631278CEC1300AB96D4;
-			remoteInfo = Orion;
+			remoteInfo = LoomClone;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		41E78632278CEC1300AB96D4 /* Orion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Orion.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41E78635278CEC1300AB96D4 /* OrionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrionApp.swift; sourceTree = "<group>"; };
+		41E78632278CEC1300AB96D4 /* LoomClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoomClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41E78635278CEC1300AB96D4 /* LoomCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneApp.swift; sourceTree = "<group>"; };
 		41E78637278CEC1300AB96D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5D /* CaptureEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureEngine.swift; sourceTree = "<group>"; };
 		41E78639278CEC1500AB96D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41E7863C278CEC1500AB96D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		41E7863E278CEC1500AB96D4 /* Orion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Orion.entitlements; sourceTree = "<group>"; };
-		41E78643278CEC1600AB96D4 /* OrionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41E78647278CEC1600AB96D4 /* OrionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrionTests.swift; sourceTree = "<group>"; };
-		41E7864D278CEC1600AB96D4 /* OrionUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrionUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41E78651278CEC1600AB96D4 /* OrionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrionUITests.swift; sourceTree = "<group>"; };
-		41E78653278CEC1600AB96D4 /* OrionUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrionUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		41E78643278CEC1600AB96D4 /* LoomCloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoomCloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		41E78647278CEC1600AB96D4 /* LoomCloneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneTests.swift; sourceTree = "<group>"; };
+		41E7864D278CEC1600AB96D4 /* LoomCloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoomCloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		41E78651278CEC1600AB96D4 /* LoomCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneUITests.swift; sourceTree = "<group>"; };
+		41E78653278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +76,9 @@
 		41E78629278CEC1300AB96D4 = {
 			isa = PBXGroup;
 			children = (
-				41E78634278CEC1300AB96D4 /* Orion */,
-				41E78646278CEC1600AB96D4 /* OrionTests */,
-				41E78650278CEC1600AB96D4 /* OrionUITests */,
+				41E78634278CEC1300AB96D4 /* LoomClone */,
+				41E78646278CEC1600AB96D4 /* LoomCloneTests */,
+				41E78650278CEC1600AB96D4 /* LoomCloneUITests */,
 				41E78633278CEC1300AB96D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,23 +86,23 @@
 		41E78633278CEC1300AB96D4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				41E78632278CEC1300AB96D4 /* Orion.app */,
-				41E78643278CEC1600AB96D4 /* OrionTests.xctest */,
-				41E7864D278CEC1600AB96D4 /* OrionUITests.xctest */,
+				41E78632278CEC1300AB96D4 /* LoomClone.app */,
+				41E78643278CEC1600AB96D4 /* LoomCloneTests.xctest */,
+				41E7864D278CEC1600AB96D4 /* LoomCloneUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		41E78634278CEC1300AB96D4 /* Orion */ = {
+		41E78634278CEC1300AB96D4 /* LoomClone */ = {
 			isa = PBXGroup;
 			children = (
-				41E78635278CEC1300AB96D4 /* OrionApp.swift */,
+				41E78635278CEC1300AB96D4 /* LoomCloneApp.swift */,
 				41E78637278CEC1300AB96D4 /* ContentView.swift */,
+				A1B2C3D4E5F60718293A4B5D /* CaptureEngine.swift */,
 				41E78639278CEC1500AB96D4 /* Assets.xcassets */,
-				41E7863E278CEC1500AB96D4 /* Orion.entitlements */,
 				41E7863B278CEC1500AB96D4 /* Preview Content */,
 			);
-			path = Orion;
+			path = LoomClone;
 			sourceTree = "<group>";
 		};
 		41E7863B278CEC1500AB96D4 /* Preview Content */ = {
@@ -112,29 +113,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		41E78646278CEC1600AB96D4 /* OrionTests */ = {
+		41E78646278CEC1600AB96D4 /* LoomCloneTests */ = {
 			isa = PBXGroup;
 			children = (
-				41E78647278CEC1600AB96D4 /* OrionTests.swift */,
+				41E78647278CEC1600AB96D4 /* LoomCloneTests.swift */,
 			);
-			path = OrionTests;
+			path = LoomCloneTests;
 			sourceTree = "<group>";
 		};
-		41E78650278CEC1600AB96D4 /* OrionUITests */ = {
+		41E78650278CEC1600AB96D4 /* LoomCloneUITests */ = {
 			isa = PBXGroup;
 			children = (
-				41E78651278CEC1600AB96D4 /* OrionUITests.swift */,
-				41E78653278CEC1600AB96D4 /* OrionUITestsLaunchTests.swift */,
+				41E78651278CEC1600AB96D4 /* LoomCloneUITests.swift */,
+				41E78653278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift */,
 			);
-			path = OrionUITests;
+			path = LoomCloneUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		41E78631278CEC1300AB96D4 /* Orion */ = {
+		41E78631278CEC1300AB96D4 /* LoomClone */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "Orion" */;
+			buildConfigurationList = 41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomClone" */;
 			buildPhases = (
 				41E7862E278CEC1300AB96D4 /* Sources */,
 				41E7862F278CEC1300AB96D4 /* Frameworks */,
@@ -144,14 +145,14 @@
 			);
 			dependencies = (
 			);
-			name = Orion;
-			productName = Orion;
-			productReference = 41E78632278CEC1300AB96D4 /* Orion.app */;
+			name = LoomClone;
+			productName = LoomClone;
+			productReference = 41E78632278CEC1300AB96D4 /* LoomClone.app */;
 			productType = "com.apple.product-type.application";
 		};
-		41E78642278CEC1600AB96D4 /* OrionTests */ = {
+		41E78642278CEC1600AB96D4 /* LoomCloneTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "OrionTests" */;
+			buildConfigurationList = 41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneTests" */;
 			buildPhases = (
 				41E7863F278CEC1600AB96D4 /* Sources */,
 				41E78640278CEC1600AB96D4 /* Frameworks */,
@@ -162,14 +163,14 @@
 			dependencies = (
 				41E78645278CEC1600AB96D4 /* PBXTargetDependency */,
 			);
-			name = OrionTests;
-			productName = OrionTests;
-			productReference = 41E78643278CEC1600AB96D4 /* OrionTests.xctest */;
+			name = LoomCloneTests;
+			productName = LoomCloneTests;
+			productReference = 41E78643278CEC1600AB96D4 /* LoomCloneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		41E7864C278CEC1600AB96D4 /* OrionUITests */ = {
+		41E7864C278CEC1600AB96D4 /* LoomCloneUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "OrionUITests" */;
+			buildConfigurationList = 41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneUITests" */;
 			buildPhases = (
 				41E78649278CEC1600AB96D4 /* Sources */,
 				41E7864A278CEC1600AB96D4 /* Frameworks */,
@@ -180,9 +181,9 @@
 			dependencies = (
 				41E7864F278CEC1600AB96D4 /* PBXTargetDependency */,
 			);
-			name = OrionUITests;
-			productName = OrionUITests;
-			productReference = 41E7864D278CEC1600AB96D4 /* OrionUITests.xctest */;
+			name = LoomCloneUITests;
+			productName = LoomCloneUITests;
+			productReference = 41E7864D278CEC1600AB96D4 /* LoomCloneUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -208,7 +209,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "Orion" */;
+			buildConfigurationList = 41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "LoomClone" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -221,9 +222,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				41E78631278CEC1300AB96D4 /* Orion */,
-				41E78642278CEC1600AB96D4 /* OrionTests */,
-				41E7864C278CEC1600AB96D4 /* OrionUITests */,
+				41E78631278CEC1300AB96D4 /* LoomClone */,
+				41E78642278CEC1600AB96D4 /* LoomCloneTests */,
+				41E7864C278CEC1600AB96D4 /* LoomCloneUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -260,7 +261,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				41E78638278CEC1300AB96D4 /* ContentView.swift in Sources */,
-				41E78636278CEC1300AB96D4 /* OrionApp.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* CaptureEngine.swift in Sources */,
+				41E78636278CEC1300AB96D4 /* LoomCloneApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41E78648278CEC1600AB96D4 /* OrionTests.swift in Sources */,
+				41E78648278CEC1600AB96D4 /* LoomCloneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41E78654278CEC1600AB96D4 /* OrionUITestsLaunchTests.swift in Sources */,
-				41E78652278CEC1600AB96D4 /* OrionUITests.swift in Sources */,
+				41E78654278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift in Sources */,
+				41E78652278CEC1600AB96D4 /* LoomCloneUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,12 +288,12 @@
 /* Begin PBXTargetDependency section */
 		41E78645278CEC1600AB96D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 41E78631278CEC1300AB96D4 /* Orion */;
+			target = 41E78631278CEC1300AB96D4 /* LoomClone */;
 			targetProxy = 41E78644278CEC1600AB96D4 /* PBXContainerItemProxy */;
 		};
 		41E7864F278CEC1600AB96D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 41E78631278CEC1300AB96D4 /* Orion */;
+			target = 41E78631278CEC1300AB96D4 /* LoomClone */;
 			targetProxy = 41E7864E278CEC1600AB96D4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -348,7 +350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -403,7 +405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -417,20 +419,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Orion/Orion.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Orion/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"LoomClone/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to show and record the bubble preview.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access is required to record narration.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.Orion;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -442,20 +445,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Orion/Orion.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Orion/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"LoomClone/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to show and record the bubble preview.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Microphone access is required to record narration.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.Orion;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomClone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -470,13 +474,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.OrionTests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orion.app/Contents/MacOS/Orion";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoomClone.app/Contents/MacOS/LoomClone";
 			};
 			name = Debug;
 		};
@@ -488,13 +492,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.OrionTests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Orion.app/Contents/MacOS/Orion";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoomClone.app/Contents/MacOS/LoomClone";
 			};
 			name = Release;
 		};
@@ -506,11 +510,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.OrionUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Orion;
+				TEST_TARGET_NAME = LoomClone;
 			};
 			name = Debug;
 		};
@@ -522,18 +526,18 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.OrionUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = Orion;
+				TEST_TARGET_NAME = LoomClone;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "Orion" */ = {
+		41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "LoomClone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E78655278CEC1600AB96D4 /* Debug */,
@@ -542,7 +546,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "Orion" */ = {
+		41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomClone" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E78658278CEC1600AB96D4 /* Debug */,
@@ -551,7 +555,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "OrionTests" */ = {
+		41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E7865B278CEC1600AB96D4 /* Debug */,
@@ -560,7 +564,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "OrionUITests" */ = {
+		41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E7865E278CEC1600AB96D4 /* Debug */,

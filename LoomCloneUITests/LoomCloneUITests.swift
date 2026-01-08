@@ -1,13 +1,13 @@
 //
-//  OrionUITests.swift
-//  OrionUITests
+//  LoomCloneUITests.swift
+//  LoomCloneUITests
 //
 //  Created by Kaiser Pister on 1/10/22.
 //
 
 import XCTest
 
-class OrionUITests: XCTestCase {
+class LoomCloneUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

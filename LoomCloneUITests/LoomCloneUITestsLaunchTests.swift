@@ -1,13 +1,13 @@
 //
-//  OrionUITestsLaunchTests.swift
-//  OrionUITests
+//  LoomCloneUITestsLaunchTests.swift
+//  LoomCloneUITests
 //
 //  Created by Kaiser Pister on 1/10/22.
 //
 
 import XCTest
 
-class OrionUITestsLaunchTests: XCTestCase {
+class LoomCloneUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
