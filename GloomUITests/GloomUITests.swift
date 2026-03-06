@@ -1,13 +1,11 @@
 //
-//  LoomCloneUITests.swift
-//  LoomCloneUITests
-//
-//  Created by Kaiser Pister on 1/10/22.
+//  GloomUITests.swift
+//  GloomUITests
 //
 
 import XCTest
 
-class LoomCloneUITests: XCTestCase {
+class GloomUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

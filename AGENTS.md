@@ -1,22 +1,22 @@
-# LoomClone AGENTS Guide
+# Gloom AGENTS Guide
 
 Quick orientation for humans and coding agents working in this repo.
 
 Overview
 - macOS SwiftUI app that records screen + camera + mic (Loom clone).
 - Screen capture uses ScreenCaptureKit; camera + mic via AVFoundation.
-- Outputs are saved to `~/Movies/LoomClone` as `screen_*.mov`, `camera_*.mov`, `meta_*.json`.
+- Outputs are saved to `~/Movies/Gloom` as `screen_*.mov`, `meta_*.json`.
 
 Key entry points
-- `LoomClone/LoomCloneApp.swift`: app entry, launches `ContentView`.
-- `LoomClone/ContentView.swift`: circular UI, window styling, controls, timer rim animation.
-- `LoomClone/CaptureEngine.swift`: recording state machine, capture pipeline, asset writers.
+- `Gloom/GloomApp.swift`: app entry, launches `ContentView`.
+- `Gloom/ContentView.swift`: circular UI, window styling, controls, timer rim animation.
+- `Gloom/CaptureEngine.swift`: recording state machine, capture pipeline, asset writers.
 
 Recording pipeline (CaptureEngine.swift)
 - `AppViewModel` orchestrates start/pause/resume/stop.
 - `ScreenRecorder` wraps `SCStream` and feeds `ScreenAssetWriter`.
 - `MicAudioCapture` captures mic samples; now prefers built-in mic to avoid Bluetooth encoder failures.
-- `CameraController` captures camera samples to `CameraAssetWriter`.
+- `CameraController` manages the camera preview session (camera is captured within the screen recording).
 - `PauseController` tracks pause offsets; used to adjust sample timing so A/V stays monotonic.
 - `ScreenAssetWriter` waits briefly for audio format; after timeout can start video-only.
 
@@ -39,9 +39,9 @@ Permissions
 - If Screen Recording is granted while running, the app must be restarted.
 
 Where to add changes
-- New capture features or output formats: `LoomClone/CaptureEngine.swift`.
-- UI/UX changes for the circular overlay and controls: `LoomClone/ContentView.swift`.
-- App-wide setup: `LoomClone/LoomCloneApp.swift`.
+- New capture features or output formats: `Gloom/CaptureEngine.swift`.
+- UI/UX changes for the circular overlay and controls: `Gloom/ContentView.swift`.
+- App-wide setup: `Gloom/GloomApp.swift`.
 
 Testing
 - No automated tests are wired for recording behavior.

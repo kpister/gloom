@@ -1,13 +1,11 @@
 //
-//  LoomCloneUITestsLaunchTests.swift
-//  LoomCloneUITests
-//
-//  Created by Kaiser Pister on 1/10/22.
+//  GloomUITestsLaunchTests.swift
+//  GloomUITests
 //
 
 import XCTest
 
-class LoomCloneUITestsLaunchTests: XCTestCase {
+class GloomUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

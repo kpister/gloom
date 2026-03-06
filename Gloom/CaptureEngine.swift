@@ -2,13 +2,14 @@ import AVFoundation
 import CoreGraphics
 import CoreVideo
 import Foundation
+import IOKit.audio
 import os
 import QuartzCore
 import ScreenCaptureKit
 import SwiftUI
 
 private let captureLogger = Logger(
-    subsystem: Bundle.main.bundleIdentifier ?? "LoomClone",
+    subsystem: Bundle.main.bundleIdentifier ?? "Gloom",
     category: "Capture"
 )
 
@@ -164,7 +165,6 @@ final class AppViewModel: ObservableObject {
     @Published var state: RecordingState = .idle
     @Published var elapsedTime: TimeInterval = 0
     @Published var screenOutputURL: URL?
-    @Published var cameraOutputURL: URL?
     @Published var metadataOutputURL: URL?
     @Published var errorMessage: String?
     @Published var needsScreenRecordingPermission = false
@@ -282,11 +282,9 @@ final class AppViewModel: ObservableObject {
         let outputDir = outputDirectory()
         let timestamp = timestampString()
         let screenURL = outputDir.appendingPathComponent("screen_\(timestamp).mov")
-        let cameraURL = outputDir.appendingPathComponent("camera_\(timestamp).mov")
         let metadataURL = outputDir.appendingPathComponent("meta_\(timestamp).json")
 
         screenOutputURL = screenURL
-        cameraOutputURL = cameraURL
         metadataOutputURL = metadataURL
 
         pauseController.start()
@@ -296,7 +294,6 @@ final class AppViewModel: ObservableObject {
         state = .recording
 
         screenRecorder.prepareRecording(outputURL: screenURL)
-        cameraController.startRecording(outputURL: cameraURL, pauseController: pauseController)
 
         AVCaptureDevice.requestAccess(for: .audio) { granted in
             DispatchQueue.main.async {
@@ -324,21 +321,12 @@ final class AppViewModel: ObservableObject {
 
         let group = DispatchGroup()
         var screenResult: Result<URL, Error>?
-        var cameraResult: Result<URL, Error>?
         var metadataResult: Result<URL, Error>?
 
         group.enter()
         screenRecorder.stopRecording { result in
             DispatchQueue.main.async {
                 screenResult = result
-                group.leave()
-            }
-        }
-
-        group.enter()
-        cameraController.stopRecording { result in
-            DispatchQueue.main.async {
-                cameraResult = result
                 group.leave()
             }
         }
@@ -354,11 +342,6 @@ final class AppViewModel: ObservableObject {
         group.notify(queue: .main) {
             self.pauseController.stop()
             if case let .failure(error) = screenResult {
-                self.state = .error
-                self.errorMessage = self.formatError(error)
-                return
-            }
-            if case let .failure(error) = cameraResult {
                 self.state = .error
                 self.errorMessage = self.formatError(error)
                 return
@@ -381,26 +364,16 @@ final class AppViewModel: ObservableObject {
         micCapture.stop()
 
         let screenURL = screenOutputURL
-        let cameraURL = cameraOutputURL
         let metadataURL = metadataOutputURL
 
         let group = DispatchGroup()
         var screenResult: Result<URL, Error>?
-        var cameraResult: Result<URL, Error>?
         var metadataResult: Result<URL, Error>?
 
         group.enter()
         screenRecorder.stopRecording { result in
             DispatchQueue.main.async {
                 screenResult = result
-                group.leave()
-            }
-        }
-
-        group.enter()
-        cameraController.stopRecording { result in
-            DispatchQueue.main.async {
-                cameraResult = result
                 group.leave()
             }
         }
@@ -420,20 +393,14 @@ final class AppViewModel: ObservableObject {
                 self.errorMessage = self.formatError(error)
                 return
             }
-            if case let .failure(error) = cameraResult {
-                self.state = .error
-                self.errorMessage = self.formatError(error)
-                return
-            }
             if case let .failure(error) = metadataResult {
                 self.state = .error
                 self.errorMessage = self.formatError(error)
                 return
             }
 
-            self.deleteRecordingFiles(screenURL: screenURL, cameraURL: cameraURL, metadataURL: metadataURL)
+            self.deleteRecordingFiles(screenURL: screenURL, metadataURL: metadataURL)
             self.screenOutputURL = nil
-            self.cameraOutputURL = nil
             self.metadataOutputURL = nil
             self.elapsedTime = 0
             self.state = .idle
@@ -489,7 +456,7 @@ final class AppViewModel: ObservableObject {
     private func outputDirectory() -> URL {
         let base = FileManager.default.urls(for: .moviesDirectory, in: .userDomainMask).first
             ?? FileManager.default.homeDirectoryForCurrentUser
-        let dir = base.appendingPathComponent("LoomClone", isDirectory: true)
+        let dir = base.appendingPathComponent("Gloom", isDirectory: true)
         if !FileManager.default.fileExists(atPath: dir.path) {
             try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         }
@@ -511,10 +478,10 @@ final class AppViewModel: ObservableObject {
         let granted = CGRequestScreenCaptureAccess()
         if granted {
             needsScreenRecordingPermission = false
-            errorMessage = "Screen Recording permission was granted. Please quit and relaunch LoomClone."
+            errorMessage = "Screen Recording permission was granted. Please quit and relaunch Gloom."
         } else {
             needsScreenRecordingPermission = true
-            errorMessage = "Screen Recording permission is required. Enable LoomClone in System Settings → Privacy & Security → Screen Recording, then relaunch."
+            errorMessage = "Screen Recording permission is required. Enable Gloom in System Settings → Privacy & Security → Screen Recording, then relaunch."
         }
         return false
     }
@@ -532,9 +499,9 @@ final class AppViewModel: ObservableObject {
         errorMessage = formatError(error)
     }
 
-    private func deleteRecordingFiles(screenURL: URL?, cameraURL: URL?, metadataURL: URL?) {
+    private func deleteRecordingFiles(screenURL: URL?, metadataURL: URL?) {
         let fileManager = FileManager.default
-        for url in [screenURL, cameraURL, metadataURL] {
+        for url in [screenURL, metadataURL] {
             guard let url else { continue }
             if fileManager.fileExists(atPath: url.path) {
                 try? fileManager.removeItem(at: url)
@@ -597,6 +564,8 @@ final class ScreenRecorder: NSObject, SCStreamOutput, SCStreamDelegate {
         let evenHeight = height - (height % 2)
         config.width = max(2, evenWidth)
         config.height = max(2, evenHeight)
+        config.sourceRect = CGRect(x: 0, y: 0, width: CGFloat(display.width), height: CGFloat(display.height))
+        config.captureResolution = .best
         config.minimumFrameInterval = CMTime(value: 1, timescale: 30)
         config.queueDepth = 6
         config.pixelFormat = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange
@@ -739,29 +708,38 @@ final class MicAudioCapture: NSObject, AVCaptureAudioDataOutputSampleBufferDeleg
     }
 
     private func selectAudioDevice() -> AVCaptureDevice? {
+        let devices: [AVCaptureDevice]
         if #available(macOS 14.0, *) {
-            if let builtIn = AVCaptureDevice.default(.microphone, for: .audio, position: .unspecified) {
-                return builtIn
-            }
+            devices = AVCaptureDevice.DiscoverySession(
+                deviceTypes: [.microphone],
+                mediaType: .audio,
+                position: .unspecified
+            ).devices
         } else {
-            if let builtIn = AVCaptureDevice.default(.builtInMicrophone, for: .audio, position: .unspecified) {
-                return builtIn
-            }
+            devices = AVCaptureDevice.DiscoverySession(
+                deviceTypes: [.builtInMicrophone],
+                mediaType: .audio,
+                position: .unspecified
+            ).devices
         }
-        return AVCaptureDevice.default(for: .audio)
+
+        // Prefer the built-in mic to avoid Bluetooth encoder failures.
+        if let builtIn = devices.first(where: { $0.transportType == kIOAudioDeviceTransportTypeBuiltIn }) {
+            return builtIn
+        }
+        if let nonBluetooth = devices.first(where: { $0.transportType != kIOAudioDeviceTransportTypeBluetooth }) {
+            return nonBluetooth
+        }
+        return devices.first ?? AVCaptureDevice.default(for: .audio)
     }
 }
 
-final class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
+final class CameraController: NSObject {
     let session = AVCaptureSession()
     var onError: ((Error) -> Void)?
 
     private let sessionQueue = DispatchQueue(label: "CameraController.session")
-    private let outputQueue = DispatchQueue(label: "CameraController.output")
-    private let stateQueue = DispatchQueue(label: "CameraController.state")
     private var isConfigured = false
-    private var writer: CameraAssetWriter?
-    private var currentOutputURL: URL?
 
     func startSession() {
         sessionQueue.async {
@@ -781,34 +759,6 @@ final class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
 
-    func startRecording(outputURL: URL, pauseController: PauseController) {
-        let writer = CameraAssetWriter(outputURL: outputURL, pauseController: pauseController)
-        stateQueue.sync {
-            self.writer = writer
-            self.currentOutputURL = outputURL
-        }
-    }
-
-    func stopRecording(completion: @escaping (Result<URL, Error>) -> Void) {
-        let (writer, outputURL) = stateQueue.sync { () -> (CameraAssetWriter?, URL?) in
-            defer { self.writer = nil }
-            let url = self.currentOutputURL
-            self.currentOutputURL = nil
-            return (self.writer, url)
-        }
-        guard let writer else {
-            completion(.success(outputURL ?? URL(fileURLWithPath: "")))
-            return
-        }
-        writer.finish(completion: completion)
-    }
-
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-        guard CMSampleBufferDataIsReady(sampleBuffer) else { return }
-        let writer = stateQueue.sync { self.writer }
-        writer?.appendVideo(sampleBuffer: sampleBuffer)
-    }
-
     private func configureSession() {
         session.beginConfiguration()
         session.sessionPreset = .high
@@ -822,17 +772,6 @@ final class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDele
             } catch {
                 onError?(error)
             }
-        }
-
-        let output = AVCaptureVideoDataOutput()
-        output.videoSettings = [
-            kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)
-        ]
-        output.alwaysDiscardsLateVideoFrames = true
-        output.setSampleBufferDelegate(self, queue: outputQueue)
-
-        if session.canAddOutput(output) {
-            session.addOutput(output)
         }
 
         session.commitConfiguration()
@@ -1131,132 +1070,6 @@ final class ScreenAssetWriter {
             return .hevc
         }
         return preferred
-    }
-}
-
-final class CameraAssetWriter {
-    private let outputURL: URL
-    private let pauseController: PauseController
-    private let queue = DispatchQueue(label: "CameraAssetWriter")
-    private let codec: AVVideoCodecType
-
-    private var writer: AVAssetWriter?
-    private var videoInput: AVAssetWriterInput?
-    private var didStartSession = false
-    private var lastVideoPTS: CMTime?
-    private var isFinishing = false
-
-    init(outputURL: URL, pauseController: PauseController, codec: AVVideoCodecType = .h264) {
-        self.outputURL = outputURL
-        self.pauseController = pauseController
-        self.codec = codec
-    }
-
-    func appendVideo(sampleBuffer: CMSampleBuffer) {
-        queue.async {
-            guard !self.isFinishing else { return }
-            guard CMSampleBufferDataIsReady(sampleBuffer) else { return }
-            guard !self.pauseController.shouldDropSamples() else { return }
-
-            do {
-                try self.configureIfNeeded(sampleBuffer: sampleBuffer)
-            } catch {
-                return
-            }
-            guard let writer = self.writer, let input = self.videoInput else { return }
-
-            let offset = self.pauseController.currentOffset()
-            if !self.didStartSession {
-                if !writer.startWriting() {
-                    logAssetWriterFailure(writer, context: "CameraAssetWriter startWriting failed")
-                    return
-                }
-                let rawStart = CMTimeSubtract(CMSampleBufferGetPresentationTimeStamp(sampleBuffer), offset)
-                let startTime = CMTimeCompare(rawStart, .zero) < 0 ? .zero : rawStart
-                writer.startSession(atSourceTime: startTime)
-                self.didStartSession = true
-            }
-
-            guard input.isReadyForMoreMediaData else { return }
-            let adjusted = SampleBufferTiming.adjust(sampleBuffer, by: offset) ?? sampleBuffer
-            let pts = CMSampleBufferGetPresentationTimeStamp(adjusted)
-            if pts.isValid, CMTimeCompare(pts, .zero) < 0 {
-                return
-            }
-            if pts.isValid, let last = self.lastVideoPTS, CMTimeCompare(pts, last) <= 0 {
-                return
-            }
-            self.lastVideoPTS = pts.isValid ? pts : self.lastVideoPTS
-            if !input.append(adjusted) {
-                logAssetWriterFailure(writer, context: "CameraAssetWriter video append failed")
-            }
-        }
-    }
-
-    func finish(completion: @escaping (Result<URL, Error>) -> Void) {
-        queue.async {
-            guard let writer = self.writer, let input = self.videoInput else {
-                completion(.success(self.outputURL))
-                return
-            }
-            if self.isFinishing {
-                completion(.success(self.outputURL))
-                return
-            }
-            self.isFinishing = true
-            guard self.didStartSession else {
-                writer.cancelWriting()
-                completion(.success(self.outputURL))
-                return
-            }
-            input.markAsFinished()
-            writer.finishWriting {
-                if let error = writer.error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(self.outputURL))
-                }
-            }
-        }
-    }
-
-    private func configureIfNeeded(sampleBuffer: CMSampleBuffer) throws {
-        guard writer == nil else { return }
-
-        if FileManager.default.fileExists(atPath: outputURL.path) {
-            try? FileManager.default.removeItem(at: outputURL)
-        }
-
-        let writer = try AVAssetWriter(outputURL: outputURL, fileType: .mov)
-        guard let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {
-            throw NSError(domain: "CameraAssetWriter", code: -1)
-        }
-        let dimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
-
-        let compression: [String: Any] = [
-            AVVideoAverageBitRateKey: 5_000_000,
-            AVVideoProfileLevelKey: AVVideoProfileLevelH264HighAutoLevel,
-            AVVideoExpectedSourceFrameRateKey: 30,
-            AVVideoMaxKeyFrameIntervalKey: 60
-        ]
-
-        let settings: [String: Any] = [
-            AVVideoCodecKey: codec,
-            AVVideoWidthKey: Int(dimensions.width),
-            AVVideoHeightKey: Int(dimensions.height),
-            AVVideoCompressionPropertiesKey: compression
-        ]
-
-        let input = AVAssetWriterInput(mediaType: .video, outputSettings: settings)
-        input.expectsMediaDataInRealTime = true
-
-        guard writer.canAdd(input) else {
-            throw NSError(domain: "CameraAssetWriter", code: -2)
-        }
-        writer.add(input)
-
-        self.writer = writer
-        self.videoInput = input
     }
 }
 

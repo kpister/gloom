@@ -6,6 +6,7 @@ struct ContentView: View {
     @StateObject private var model = AppViewModel()
     @State private var lastState: RecordingState = .idle
     @State private var windowRef: NSWindow?
+    @State private var isHoveringWindow = false
 
     var body: some View {
         previewArea
@@ -37,11 +38,14 @@ struct ContentView: View {
                 ZStack {
                     timerOverlay(size: size, radius: max(0, windowRadius - 8))
 
-                    Button(action: primaryControlAction) {
-                        controlCircle(icon: primaryControlIcon)
+                    if model.state != .recording || isHoveringWindow {
+                        Button(action: primaryControlAction) {
+                            controlCircle(icon: primaryControlIcon)
+                        }
+                        .buttonStyle(.plain)
+                        .position(clampControl(point: ringPoint(center: center, angleDegrees: 90, radius: ringRadius), in: size))
+                        .transition(.opacity)
                     }
-                    .buttonStyle(.plain)
-                    .position(clampControl(point: ringPoint(center: center, angleDegrees: 90, radius: ringRadius), in: size))
 
                     if model.state != .recording {
                         Button(action: { resizeWindow(by: -40) }) {
@@ -83,6 +87,11 @@ struct ContentView: View {
         .clipShape(Circle())
         .contentShape(Circle())
         .overlay(alignment: .topLeading) { statusOverlay }
+        .onHover { hovering in
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHoveringWindow = hovering
+            }
+        }
     }
 
     private var statusOverlay: some View {
@@ -282,6 +291,8 @@ struct ContentView: View {
         window.titlebarAppearsTransparent = true
         window.isMovableByWindowBackground = true
         window.contentAspectRatio = NSSize(width: clampedRatio, height: 1)
+        window.level = .floating
+        window.collectionBehavior = window.collectionBehavior.union([.canJoinAllSpaces, .fullScreenAuxiliary])
     }
 
     private func resizeWindow(by delta: CGFloat) {

@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41E78636278CEC1300AB96D4 /* LoomCloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78635278CEC1300AB96D4 /* LoomCloneApp.swift */; };
+		41E78636278CEC1300AB96D4 /* GloomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78635278CEC1300AB96D4 /* GloomApp.swift */; };
 		41E78638278CEC1300AB96D4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78637278CEC1300AB96D4 /* ContentView.swift */; };
 		A1B2C3D4E5F60718293A4B5C /* CaptureEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* CaptureEngine.swift */; };
 		41E7863A278CEC1500AB96D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E78639278CEC1500AB96D4 /* Assets.xcassets */; };
 		41E7863D278CEC1500AB96D4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41E7863C278CEC1500AB96D4 /* Preview Assets.xcassets */; };
-		41E78648278CEC1600AB96D4 /* LoomCloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78647278CEC1600AB96D4 /* LoomCloneTests.swift */; };
-		41E78652278CEC1600AB96D4 /* LoomCloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78651278CEC1600AB96D4 /* LoomCloneUITests.swift */; };
-		41E78654278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78653278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift */; };
+		41E78648278CEC1600AB96D4 /* GloomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78647278CEC1600AB96D4 /* GloomTests.swift */; };
+		41E78652278CEC1600AB96D4 /* GloomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78651278CEC1600AB96D4 /* GloomUITests.swift */; };
+		41E78654278CEC1600AB96D4 /* GloomUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E78653278CEC1600AB96D4 /* GloomUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,29 +23,29 @@
 			containerPortal = 41E7862A278CEC1300AB96D4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 41E78631278CEC1300AB96D4;
-			remoteInfo = LoomClone;
+			remoteInfo = Gloom;
 		};
 		41E7864E278CEC1600AB96D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 41E7862A278CEC1300AB96D4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 41E78631278CEC1300AB96D4;
-			remoteInfo = LoomClone;
+			remoteInfo = Gloom;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		41E78632278CEC1300AB96D4 /* LoomClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoomClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		41E78635278CEC1300AB96D4 /* LoomCloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneApp.swift; sourceTree = "<group>"; };
+		41E78632278CEC1300AB96D4 /* Gloom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gloom.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41E78635278CEC1300AB96D4 /* GloomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GloomApp.swift; sourceTree = "<group>"; };
 		41E78637278CEC1300AB96D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B5D /* CaptureEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureEngine.swift; sourceTree = "<group>"; };
 		41E78639278CEC1500AB96D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41E7863C278CEC1500AB96D4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		41E78643278CEC1600AB96D4 /* LoomCloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoomCloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41E78647278CEC1600AB96D4 /* LoomCloneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneTests.swift; sourceTree = "<group>"; };
-		41E7864D278CEC1600AB96D4 /* LoomCloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoomCloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		41E78651278CEC1600AB96D4 /* LoomCloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneUITests.swift; sourceTree = "<group>"; };
-		41E78653278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoomCloneUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		41E78643278CEC1600AB96D4 /* GloomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GloomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		41E78647278CEC1600AB96D4 /* GloomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GloomTests.swift; sourceTree = "<group>"; };
+		41E7864D278CEC1600AB96D4 /* GloomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GloomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		41E78651278CEC1600AB96D4 /* GloomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GloomUITests.swift; sourceTree = "<group>"; };
+		41E78653278CEC1600AB96D4 /* GloomUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GloomUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +76,9 @@
 		41E78629278CEC1300AB96D4 = {
 			isa = PBXGroup;
 			children = (
-				41E78634278CEC1300AB96D4 /* LoomClone */,
-				41E78646278CEC1600AB96D4 /* LoomCloneTests */,
-				41E78650278CEC1600AB96D4 /* LoomCloneUITests */,
+				41E78634278CEC1300AB96D4 /* Gloom */,
+				41E78646278CEC1600AB96D4 /* GloomTests */,
+				41E78650278CEC1600AB96D4 /* GloomUITests */,
 				41E78633278CEC1300AB96D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,23 +86,23 @@
 		41E78633278CEC1300AB96D4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				41E78632278CEC1300AB96D4 /* LoomClone.app */,
-				41E78643278CEC1600AB96D4 /* LoomCloneTests.xctest */,
-				41E7864D278CEC1600AB96D4 /* LoomCloneUITests.xctest */,
+				41E78632278CEC1300AB96D4 /* Gloom.app */,
+				41E78643278CEC1600AB96D4 /* GloomTests.xctest */,
+				41E7864D278CEC1600AB96D4 /* GloomUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		41E78634278CEC1300AB96D4 /* LoomClone */ = {
+		41E78634278CEC1300AB96D4 /* Gloom */ = {
 			isa = PBXGroup;
 			children = (
-				41E78635278CEC1300AB96D4 /* LoomCloneApp.swift */,
+				41E78635278CEC1300AB96D4 /* GloomApp.swift */,
 				41E78637278CEC1300AB96D4 /* ContentView.swift */,
 				A1B2C3D4E5F60718293A4B5D /* CaptureEngine.swift */,
 				41E78639278CEC1500AB96D4 /* Assets.xcassets */,
 				41E7863B278CEC1500AB96D4 /* Preview Content */,
 			);
-			path = LoomClone;
+			path = Gloom;
 			sourceTree = "<group>";
 		};
 		41E7863B278CEC1500AB96D4 /* Preview Content */ = {
@@ -113,29 +113,29 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		41E78646278CEC1600AB96D4 /* LoomCloneTests */ = {
+		41E78646278CEC1600AB96D4 /* GloomTests */ = {
 			isa = PBXGroup;
 			children = (
-				41E78647278CEC1600AB96D4 /* LoomCloneTests.swift */,
+				41E78647278CEC1600AB96D4 /* GloomTests.swift */,
 			);
-			path = LoomCloneTests;
+			path = GloomTests;
 			sourceTree = "<group>";
 		};
-		41E78650278CEC1600AB96D4 /* LoomCloneUITests */ = {
+		41E78650278CEC1600AB96D4 /* GloomUITests */ = {
 			isa = PBXGroup;
 			children = (
-				41E78651278CEC1600AB96D4 /* LoomCloneUITests.swift */,
-				41E78653278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift */,
+				41E78651278CEC1600AB96D4 /* GloomUITests.swift */,
+				41E78653278CEC1600AB96D4 /* GloomUITestsLaunchTests.swift */,
 			);
-			path = LoomCloneUITests;
+			path = GloomUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		41E78631278CEC1300AB96D4 /* LoomClone */ = {
+		41E78631278CEC1300AB96D4 /* Gloom */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomClone" */;
+			buildConfigurationList = 41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "Gloom" */;
 			buildPhases = (
 				41E7862E278CEC1300AB96D4 /* Sources */,
 				41E7862F278CEC1300AB96D4 /* Frameworks */,
@@ -145,14 +145,14 @@
 			);
 			dependencies = (
 			);
-			name = LoomClone;
-			productName = LoomClone;
-			productReference = 41E78632278CEC1300AB96D4 /* LoomClone.app */;
+			name = Gloom;
+			productName = Gloom;
+			productReference = 41E78632278CEC1300AB96D4 /* Gloom.app */;
 			productType = "com.apple.product-type.application";
 		};
-		41E78642278CEC1600AB96D4 /* LoomCloneTests */ = {
+		41E78642278CEC1600AB96D4 /* GloomTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneTests" */;
+			buildConfigurationList = 41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "GloomTests" */;
 			buildPhases = (
 				41E7863F278CEC1600AB96D4 /* Sources */,
 				41E78640278CEC1600AB96D4 /* Frameworks */,
@@ -163,14 +163,14 @@
 			dependencies = (
 				41E78645278CEC1600AB96D4 /* PBXTargetDependency */,
 			);
-			name = LoomCloneTests;
-			productName = LoomCloneTests;
-			productReference = 41E78643278CEC1600AB96D4 /* LoomCloneTests.xctest */;
+			name = GloomTests;
+			productName = GloomTests;
+			productReference = 41E78643278CEC1600AB96D4 /* GloomTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		41E7864C278CEC1600AB96D4 /* LoomCloneUITests */ = {
+		41E7864C278CEC1600AB96D4 /* GloomUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneUITests" */;
+			buildConfigurationList = 41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "GloomUITests" */;
 			buildPhases = (
 				41E78649278CEC1600AB96D4 /* Sources */,
 				41E7864A278CEC1600AB96D4 /* Frameworks */,
@@ -181,9 +181,9 @@
 			dependencies = (
 				41E7864F278CEC1600AB96D4 /* PBXTargetDependency */,
 			);
-			name = LoomCloneUITests;
-			productName = LoomCloneUITests;
-			productReference = 41E7864D278CEC1600AB96D4 /* LoomCloneUITests.xctest */;
+			name = GloomUITests;
+			productName = GloomUITests;
+			productReference = 41E7864D278CEC1600AB96D4 /* GloomUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -209,7 +209,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "LoomClone" */;
+			buildConfigurationList = 41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "Gloom" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -222,9 +222,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				41E78631278CEC1300AB96D4 /* LoomClone */,
-				41E78642278CEC1600AB96D4 /* LoomCloneTests */,
-				41E7864C278CEC1600AB96D4 /* LoomCloneUITests */,
+				41E78631278CEC1300AB96D4 /* Gloom */,
+				41E78642278CEC1600AB96D4 /* GloomTests */,
+				41E7864C278CEC1600AB96D4 /* GloomUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -262,7 +262,7 @@
 			files = (
 				41E78638278CEC1300AB96D4 /* ContentView.swift in Sources */,
 				A1B2C3D4E5F60718293A4B5C /* CaptureEngine.swift in Sources */,
-				41E78636278CEC1300AB96D4 /* LoomCloneApp.swift in Sources */,
+				41E78636278CEC1300AB96D4 /* GloomApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41E78648278CEC1600AB96D4 /* LoomCloneTests.swift in Sources */,
+				41E78648278CEC1600AB96D4 /* GloomTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,8 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41E78654278CEC1600AB96D4 /* LoomCloneUITestsLaunchTests.swift in Sources */,
-				41E78652278CEC1600AB96D4 /* LoomCloneUITests.swift in Sources */,
+				41E78654278CEC1600AB96D4 /* GloomUITestsLaunchTests.swift in Sources */,
+				41E78652278CEC1600AB96D4 /* GloomUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,12 +288,12 @@
 /* Begin PBXTargetDependency section */
 		41E78645278CEC1600AB96D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 41E78631278CEC1300AB96D4 /* LoomClone */;
+			target = 41E78631278CEC1300AB96D4 /* Gloom */;
 			targetProxy = 41E78644278CEC1600AB96D4 /* PBXContainerItemProxy */;
 		};
 		41E7864F278CEC1600AB96D4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 41E78631278CEC1300AB96D4 /* LoomClone */;
+			target = 41E78631278CEC1300AB96D4 /* Gloom */;
 			targetProxy = 41E7864E278CEC1600AB96D4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -422,7 +422,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LoomClone/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Gloom/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to show and record the bubble preview.";
@@ -433,7 +433,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomClone;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.Gloom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -448,7 +448,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"LoomClone/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Gloom/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera access is required to show and record the bubble preview.";
@@ -459,7 +459,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomClone;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.Gloom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -476,11 +476,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.GloomTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoomClone.app/Contents/MacOS/LoomClone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gloom.app/Contents/MacOS/Gloom";
 			};
 			name = Debug;
 		};
@@ -494,11 +494,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneTests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.GloomTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoomClone.app/Contents/MacOS/LoomClone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gloom.app/Contents/MacOS/Gloom";
 			};
 			name = Release;
 		};
@@ -510,11 +510,11 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.GloomUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = LoomClone;
+				TEST_TARGET_NAME = Gloom;
 			};
 			name = Debug;
 		};
@@ -526,18 +526,18 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kaiser.LoomCloneUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = kaiser.GloomUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
-				TEST_TARGET_NAME = LoomClone;
+				TEST_TARGET_NAME = Gloom;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "LoomClone" */ = {
+		41E7862D278CEC1300AB96D4 /* Build configuration list for PBXProject "Gloom" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E78655278CEC1600AB96D4 /* Debug */,
@@ -546,7 +546,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomClone" */ = {
+		41E78657278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "Gloom" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E78658278CEC1600AB96D4 /* Debug */,
@@ -555,7 +555,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneTests" */ = {
+		41E7865A278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "GloomTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E7865B278CEC1600AB96D4 /* Debug */,
@@ -564,7 +564,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "LoomCloneUITests" */ = {
+		41E7865D278CEC1600AB96D4 /* Build configuration list for PBXNativeTarget "GloomUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				41E7865E278CEC1600AB96D4 /* Debug */,
