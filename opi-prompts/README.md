@@ -1,14 +1,15 @@
 # OPI Prompts
 
-![claude-opus-4-6](https://img.shields.io/badge/claude--opus--4--6-31.1K_in_|_5.5K_out-blue)
+![claude-opus-4-6](https://img.shields.io/badge/claude--opus--4--6-31.4K_in_|_6.0K_out-blue)
 ![openai](https://img.shields.io/badge/openai-2.2M_total-blue)
 
-Total sessions: 3
+Total sessions: 4
 
 ## claude-code
 
 | Date | Model | First Prompt |
 |------|-------|-------------|
+| 2026-03-08 | claude-opus-4-6 | [Hey claude, can you poke through this folder and update the README so that other](claude-code/2026-03-08_hey-claude-can-you-poke-through-this-folder-and-up_267140f6.json) |
 | 2026-03-06 | claude-opus-4-6 | [Hey claude, I'm considering open sourcing this swift project. Can you help me co](claude-code/2026-03-06_hey-claude-im-considering-open-sourcing-this-swift_1b3de76e.json) |
 
 ## codex
